@@ -1,10 +1,11 @@
 import axios from 'axios'; // Import Axios
+import React, { useState } from 'react'; // Import useState from React
 
-const MyComponent = () => {
+const App = () => { // Rename MyComponent to App
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [caseStatus, setCaseStatus] = useState('');
-  const [caseNumber, setCaseNumber] = useState(''); // Assuming caseNumber is stored in component state
+  const [caseNumber, setCaseNumber] = useState('');
 
   const fetchCaseStatus = async () => {
     setLoading(true);
@@ -38,3 +39,5 @@ const MyComponent = () => {
     </div>
   );
 };
+
+export default App; // Export App as the default export
