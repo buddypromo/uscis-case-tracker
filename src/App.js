@@ -11,7 +11,7 @@ const App = () => {
     setLoading(true);
     setError('');
     try {
-      // If caseNumber is empty, do not proceed with the fetch
+      // If caseNumber is empty, do not proceed with the fetch option
       if (!caseNumber) {
         setError('Please enter a case number.');
         return;
