@@ -1,7 +1,7 @@
-import axios from 'axios'; // Import Axios
-import React, { useState } from 'react'; // Import useState from React
+import axios from 'axios';
+import React, { useState } from 'react';
 
-const App = () => { // Rename MyComponent to App
+const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [caseStatus, setCaseStatus] = useState('');
@@ -11,7 +11,13 @@ const App = () => { // Rename MyComponent to App
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`https://uscis-case-tracker-backend-9gkhhxv2s-buddy-promos-projects.vercel.ap/api?caseNumber=${caseNumber}`);
+      // If caseNumber is empty, do not proceed with the fetch
+      if (!caseNumber) {
+        setError('Please enter a case number.');
+        return;
+      }
+
+      const response = await axios.get(`https://uscis-case-tracker-backend-9gkhhxv2s-buddy-promos-projects.vercel.app/api?caseNumber=${caseNumber}`);
       setCaseStatus(`${response.data.status}: ${response.data.details}`);
     } catch (error) {
       console.error('Error fetching case status:', error);
@@ -35,9 +41,18 @@ const App = () => { // Rename MyComponent to App
 
   return (
     <div>
-      {/* Your JSX content */}
+      <input
+        type="text"
+        value={caseNumber}
+        onChange={(e) => setCaseNumber(e.target.value)}
+        placeholder="Enter case number"
+      />
+      <button onClick={fetchCaseStatus}>Fetch Case Status</button>
+      {error && <p>Error: {error}</p>}
+      {loading && <p>Loading...</p>}
+      {caseStatus && <p>Case Status: {caseStatus}</p>}
     </div>
   );
 };
 
-export default App; // Export App as the default export
+export default App;
